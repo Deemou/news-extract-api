@@ -49,6 +49,7 @@ async def lifespan(app: FastAPI):
     redis = from_url(redis_url, encoding="utf-8", decode_responses=True)
     await FastAPILimiter.init(redis)  # 전역 리미터 초기화
     yield
+    await FastAPILimiter.close()
 
 
 app = FastAPI(lifespan=lifespan)
